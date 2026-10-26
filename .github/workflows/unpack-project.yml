@@ -1,0 +1,26 @@
+name: Unpack project
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Unpack and commit
+        shell: bash
+        run: |
+          if [ ! -f project.zip ]; then echo "::error::project.zip is not in the repository root"; exit 1; fi
+          unzip -q -o project.zip -x '.github/*'
+          git rm -q --cached project.zip
+          rm project.zip
+          git add -A
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git commit -q -m "Unpack project sources"
+          git push
