@@ -1,6 +1,3 @@
-# Contributing
-
-Thanks for your interest in improving Fantastic Four for Android.
 
 ## Bug reports
 
